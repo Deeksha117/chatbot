@@ -1,10 +1,42 @@
 import requests
 from lxml import html
 
-#storing response
-response = requests.get('http://www.holidayiq.com')
-#creating lxml tree from response body
-tree = html.fromstring(response.text)
+parent=''
+seedurls = ['http://www.holidayiq.com/destinations/']
 
-#Finding all anchor tags in response
-print tree.xpath('//div//a/@href')
+def html_links(urls):
+   pageurls = []
+   for url in urls:
+	#creating lxml tree from response body
+	response = requests.get(url)
+	tree = html.fromstring(response.text)
+	#Finding all anchor tags in response
+	#print tree.xpath('//div//a/@href')[100:-70]
+	for link in tree.xpath('//div//a/@href')[100:-70]:
+		#print link
+		if not link.startswith('http'):
+			link = url+link
+		#print link.split('/')[-3]
+		if link.split('/')[-3]=="states":
+			pageurls.append(link)
+			
+   #print pageurls
+   return pageurls
+
+
+#storing response
+print seedurls
+i = 0
+while(1):
+	#f =  open("urlspage","a+")
+	temp = html_links(seedurls)
+	#f.write(str(seedurls))
+	#f.write("\n")
+	seedurls = temp
+	print seedurls
+	#f.close()
+	i = i+1
+	if i==5:
+		break	
+
+#f.close()
