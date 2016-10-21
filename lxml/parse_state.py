@@ -12,7 +12,7 @@ import requests
 from lxml import html
 
 ## Open the file to read all states
-f = open("0", "r")
+f = open("../urls_to_parse/0", "r")
 states = f.readlines()
 f.close()
 
@@ -30,32 +30,32 @@ for x in range(0, 4):
     lst = state_url.split('/')
     st_name = lst[4]
 
-    state_data['name']=st_name
+    state_data['name']=st_name.lower()
     state_data['type']='state'
-    state_data2['name']=st_name
+    state_data2['name']=st_name.lower()
     response = requests.get(state_url)
     tree = html.fromstring(response.text)
 
     #for state rating
     st_rating = tree.xpath("//div[starts-with(@class,'rating-container')]/@title")[0]
-    state_data['ratings']=st_rating
+    state_data['ratings']=st_rating.lower()
     
     #for description
     l=[]
     l=tree.xpath('//div[@id="longDescriptionOne"]//span//p//span//text()')
     st_desc="".join(l)
-    state_data['details']=st_desc
+    state_data['details']=st_desc.lower()
 
     #for vedio rating
-    vedio=tree.xpath("//div[@class='footer-bottom-icon']//a/@href")[3]
-    state_data['vedio_review']=vedio
+    video=tree.xpath("//div[@class='footer-bottom-icon']//a/@href")[3]
+    state_data['video_review']=video.lower()
 
     #for list of cities/destinations
     l=tree.xpath("//div[@class='about-photo']//h5//a//text()")
     temp=[]
     for place in l:
 	l2=place.split(',')
-        temp.append(l2[0])
+        temp.append(l2[0].lower())
     state_data['places']=temp
 
     #for list of cities/destinations ---- user reviews

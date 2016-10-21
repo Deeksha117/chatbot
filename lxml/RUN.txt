@@ -5,3 +5,5 @@ Processing HolidayIQ site data to create our data store:
 
 Processing Query:
 
+3. responses.py  --- rest API call ti api.ai, asking for intent,entities and action. Uses api_ai_request.py function api_request
+
