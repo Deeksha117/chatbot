@@ -1,0 +1,7 @@
+Processing HolidayIQ site data to create our data store:
+
+1. scrapper_html.py --- scraping data
+2. parse_state.py  --- parsing state data and store in db called traveldata
+
+Processing Query:
+

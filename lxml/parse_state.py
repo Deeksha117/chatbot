@@ -31,19 +31,20 @@ for x in range(0, 4):
     st_name = lst[4]
 
     state_data['name']=st_name
+    state_data['type']='state'
     state_data2['name']=st_name
     response = requests.get(state_url)
     tree = html.fromstring(response.text)
 
     #for state rating
     st_rating = tree.xpath("//div[starts-with(@class,'rating-container')]/@title")[0]
-    state_data['rating']=st_rating
+    state_data['ratings']=st_rating
     
     #for description
     l=[]
     l=tree.xpath('//div[@id="longDescriptionOne"]//span//p//span//text()')
     st_desc="".join(l)
-    state_data['description']=st_desc
+    state_data['details']=st_desc
 
     #for vedio rating
     vedio=tree.xpath("//div[@class='footer-bottom-icon']//a/@href")[3]
@@ -55,7 +56,7 @@ for x in range(0, 4):
     for place in l:
 	l2=place.split(',')
         temp.append(l2[0])
-    state_data['cities']=temp
+    state_data['places']=temp
 
     #for list of cities/destinations ---- user reviews
     l=tree.xpath("//div[@class='review-block ']//blockquote//text()")
@@ -75,9 +76,9 @@ for post in db.states.find({}):
 	print count
 	count += 1
 	print post["name"]
-	print post["rating"]
-        print post["description"]
-        print post["cities"]
+	print post["ratings"]
+        print post["details"]
+        print post["places"]
 	print post["vedio_review"]
 	print post["reviews"]
     
