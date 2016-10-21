@@ -17,11 +17,11 @@ class Response_Functions:
     #Function called when intent is description
     def get_description(self,ids):
     	#print ids
-    	print str(db.states.find({"name":ids.lower()})[0]["description"])
+    	print db.states.find({"name":ids.lower()})[0]["details"]
 
     #function called when intent is destination
     def get_destination(self,ids):
-    	print str(db.states.find({"name":ids.lower()})[0]["places"])
+    	print db.states.find({"name":ids.lower()})[0]["places"]
 
 
 #main body
@@ -38,7 +38,7 @@ while(1):
 	obj = Response_Functions()
 	
 	key1=response["result"]["parameters"]["place_name"].lower()
-	key2=response["result"]["parameters"]["place_context"].lower()
+	key2=response["result"]["parameters"]["place_namecontext"].lower()
 
 	#Matching action name with function call from Response_Functions call
 	if response["result"]["action"]=="get_description":
