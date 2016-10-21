@@ -79,7 +79,7 @@ for post in db.states.find({}):
 	print post["ratings"]
         print post["details"]
         print post["places"]
-	print post["vedio_review"]
+	print post["video_review"]
 	print post["reviews"]
     
 
