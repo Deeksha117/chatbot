@@ -26,7 +26,7 @@
 #print tree.xpath("//div[@class='review-block ']//blockquote//text()")
 
 #for each user rating, retrieve seperately (1 to 10)
-#print tree.xpath("//div[starts-with(@class,'rating-container')]/@title")
+#print tree.xpath("//div[starts-with(@class,'rating-container')]/@title")[1:10]
 
 
 
