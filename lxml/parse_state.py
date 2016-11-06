@@ -38,17 +38,17 @@ for x in range(0, 4):
 
     #for state rating
     st_rating = tree.xpath("//div[starts-with(@class,'rating-container')]/@title")[0]
-    state_data['ratings']=st_rating.lower()
+    state_data['ratings']=st_rating
     
     #for description
     l=[]
     l=tree.xpath('//div[@id="longDescriptionOne"]//span//p//span//text()')
     st_desc="".join(l)
-    state_data['details']=st_desc.lower()
+    state_data['details']=st_desc
 
     #for vedio rating
     video=tree.xpath("//div[@class='footer-bottom-icon']//a/@href")[3]
-    state_data['video_review']=video.lower()
+    state_data['video_review']=video
 
     #for list of cities/destinations
     l=tree.xpath("//div[@class='about-photo']//h5//a//text()")

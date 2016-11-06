@@ -38,7 +38,7 @@ for x in range (0,1):
 
     #for city rating
     city_rating = tree.xpath("//div[starts-with(@class,'rating-container')]/@title")[0]
-    city_data['ratings']=city_rating.lower()
+    city_data['ratings']=city_rating
 
     #Famous for
     city_famous = tree.xpath("//div[@class='button-category dest-sprite destination-detail-heritage']//text()")[0]
@@ -46,7 +46,7 @@ for x in range (0,1):
 
     #Travel Guide
     city_guide = tree.xpath("//div[@class='pdf-link-Section']//a/@href")[0]
-    city_data['travel_guide'] = city_guide.lower()
+    city_data['travel_guide'] = city_guide
     
     #rank
     temp1=tree.xpath('//div[@class="rank-bar"]//span//text()')[1]
