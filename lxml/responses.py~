@@ -20,24 +20,24 @@ class Response_Functions:
     	#print ids
 	counter=(randint(0,3))
 	res_list=["Hola!\n Let me guide your Travel,\n\n", "Well,\n\n", "Let me give you some details,\n\n", "Your Travel guide says,\n\n"]
-    	print res_list[counter]+db.states.find({"name":ids.lower()})[0]["details"]
+    	print res_list[counter]+str(db.destinations.find({"name":ids.lower()})[0]["details"])
 
     #function called when intent is destination
     def get_destination(self,ids):
-    	print db.states.find({"name":ids.lower()})[0]["places"]
+    	print db.destinations.find({"name":ids.lower()})[0]["places"]
 
     #function called when intent is rating
     def get_rating(self,ids):
 	counter=(randint(0,3))
 	res_list=["According to Traveller feedback,\n", "Suggested by Travellers,\n", "Several Travellers have given,\n", "Travellers say,\n"]
-    	print res_list[counter]+db.states.find({"name":ids.lower()})[0]["ratings"] + ", for " +ids.title()
-	print "You may also like to see this video review from a traveller,\n" + db.states.find({"name":ids.lower()})[0]["video_review"]
+    	print res_list[counter]+db.destinations.find({"name":ids.lower()})[0]["ratings"] + ", for " +ids.title()
+	print "You may also like to see this video review from a traveller,\n" + db.destinations.find({"name":ids.lower()})[0]["video_review"]
 
     #function called when intent is review
     def get_review(self,ids):
 	print "Dear Traveller "+ ids.title()+" Reviews are as follows,\n"
-    	print ">> " +str(db.states.find({"name":ids.lower()})[0]["reviews"][0])
-	print "\n\n>> " +str(db.states.find({"name":ids.lower()})[0]["reviews"][1])
+    	print ">> " +str(db.destinations.find({"name":ids.lower()})[0]["reviews"][0])
+	print "\n\n>> " +str(db.destinations.find({"name":ids.lower()})[0]["reviews"][1])
 
 
 #main body

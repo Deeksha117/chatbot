@@ -1,7 +1,10 @@
 Processing HolidayIQ site data to create our data store:
 
-1. scrapper_html.py
-2. parse_state.py
+1. scrapper_html.py --- scraping data
+2. parse_state.py  --- parsing state data and store in db called traveldata
+3. parse_city.py  --- parse city data and store in db called traveldata
 
 Processing Query:
+
+3. responses.py  --- rest API call ti api.ai, asking for intent,entities and action. Uses api_ai_request.py function api_request
 
