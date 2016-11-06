@@ -25,7 +25,7 @@ city_data={}
 city_DS2=[]
 city_data2={}
 
-for x in range (0,1):
+for x in range (0,10):
     city_url = city[x]
     lst = city_url.split('/')
     city_name=lst[4]
@@ -34,15 +34,16 @@ for x in range (0,1):
     city_data['type'] = 'city'
     city_data2['name'] = city_name.lower()
     response = requests.get(city_url)
-    tree = html.fromstring(response.txt)
+    tree = html.fromstring(response.text)
 
     #for city rating
     city_rating = tree.xpath("//div[starts-with(@class,'rating-container')]/@title")[0]
     city_data['ratings']=city_rating
 
     #Famous for
-    city_famous = tree.xpath("//div[@class='button-category dest-sprite destination-detail-heritage']//text()")[0]
-    city_data['Famous_for'] = city_famous.lower()
+    #city_famous = tree.xpath("//div[@class='button-category dest-sprite destination-detail-heritage']//text()")
+    #print city_famous
+    #city_data['Famous_for'] = city_famous.lower()
 
     #Travel Guide
     city_guide = tree.xpath("//div[@class='pdf-link-Section']//a/@href")[0]
@@ -85,7 +86,7 @@ for post in db.destinations.find({}):
 	print post["name"]
 	print post["type"]
 	print post["ratings"]
-	print post["Famous_for"]
+	#print post["Famous_for"]
 	print post["travel_guide"]
 	print post["city_rank"]
 	print post["city_statename"]

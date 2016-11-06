@@ -65,7 +65,7 @@ for x in range(0, 4):
     
     #print state_data
     #INSERTING one state's data as a dictionary record in DB
-    db.destinations.insert(state_data.copy());
+    db.destinations.insert(state_data.copy())
     states_DS.append(state_data)
     states_DS2.append(state_data2)
 #print states_DS
