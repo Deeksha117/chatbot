@@ -1,13 +1,23 @@
 from scrapy.spider import BaseSpider
+from tutorial.items import DmozItem
+import scrapy
 
 class DmozSpider(BaseSpider):
     name = "dmoz"
-    allowed_domains = ["dmoz.org"]
+    allowed_domains = ["goibibo.com"]
     start_urls = [
-        "http://www.dmoz.org/Computers/Programming/Languages/Python/Books/",
-        "http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"
+        "https://www.goibibo.com/travel-guide/india/"
     ]
 
+    #scraps website dmoz for 2 seed URLs, response content written in current directory
     def parse(self, response):
-        filename = response.url.split("/")[-2]
-        open(filename, 'wb').write(response.body)
+        hxs = scrapy.Selector(response)
+        sites = hxs.xpath('//ul/li')
+        items = []
+        for site in sites:
+           item = DmozItem()
+           item['title'] = site.select('a/text()').extract()
+           item['link'] = site.select('a/@href').extract()
+           item['desc'] = site.select('text()').extract()
+           items.append(item)
+        return items

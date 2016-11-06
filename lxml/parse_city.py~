@@ -1,0 +1,26 @@
+#!/usr/bin/python
+
+#USING MONGOdb, for python
+import pymongo
+
+#creating a new user session
+client = pymongo.MongoClient()
+
+#creating a new DB called, traveldata
+db = client.traveldata
+import requests
+from lxml import html
+
+## Open the file to read all states
+f = open("../urls_to_parse/1", "r")
+city = f.readlines()
+f.close()
+
+#print states
+
+city_DS=[]
+city_data={}
+
+#only storing user-reviews, for sentiment analysis
+city_DS2=[]
+city_data2={}
