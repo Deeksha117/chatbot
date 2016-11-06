@@ -11,6 +11,8 @@ db = client.traveldata
 import requests
 from lxml import html
 
+db.destinations.drop()
+
 ## Open the file to read all states
 f = open("../urls_to_parse/0", "r")
 states = f.readlines()
@@ -43,7 +45,13 @@ for x in range(0, 4):
     #for description
     l=[]
     l=tree.xpath('//div[@id="longDescriptionOne"]//span//p//span//text()')
-    st_desc="".join(l)
+    st_desc=""
+    for item in l:
+	try:
+    		st_desc=str(st_desc+str(item))
+		print str(item)
+	except:
+		continue
     state_data['details']=st_desc
 
     #for vedio rating
@@ -77,7 +85,7 @@ for post in db.destinations.find({}):
 	count += 1
 	print post["name"]
 	print post["ratings"]
-        print post["details"]
+        #print post["details"]
         print post["places"]
 	print post["video_review"]
 	print post["reviews"]
