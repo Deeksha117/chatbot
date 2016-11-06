@@ -80,7 +80,7 @@ for x in range (0,10):
     #printing from traveldata.destinations table
 
 count = 0
-for post in db.destinations.find({}):
+for post in db.destinations.find({"type":"city"}):
 	print count
 	count += 1
 	print post["name"]

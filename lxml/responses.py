@@ -20,11 +20,26 @@ class Response_Functions:
     	#print ids
 		counter=(randint(0,3))
 		res_list=["Hola!\n Let me guide your Travel,\n\n", "Well,\n\n", "Let me give you some details,\n\n", "Your Travel guide says,\n\n"]
-		return res_list[counter]+"\n".join(db.destinations.find({"name":ids.lower()})[0]["details"].split('.')[:4])
+		return res_list[counter]+"".join(db.destinations.find({"name":ids.lower()})[0]["details"].split('.')[:4])
 
     #function called when intent is destination
     def get_destination(self,ids):
-    	return db.destinations.find({"name":ids.lower()})[0]["places"]
+    	themes = ['beach', 'hill', 'adventure', 'jungle', 'honeymoon', 'desert', 'waterfront' ]
+    	for t in themes:
+    		if t == ids:
+    			print "beaches are: "
+    			#call db for popular places and return
+    	# else for proper nouns: states and cities, fetch from db
+    	places = db.destinations.find({"name":ids.lower()})[0]["places"]
+    	if db.destinations.find({"name":ids.lower()})[0]["type"] == "state":
+    		strn = ids + " has the following popular places to visit:\n"
+    	else : 
+    		strn = "Popular Sightseeing places in "+ids+" are:\n"
+
+    	strn = strn + "\n"
+    	for p in places:
+    		strn=strn+str(p)+", "
+    	return strn
 
     #function called when intent is rating
     def get_rating(self,ids):
@@ -126,7 +141,7 @@ if __name__ == "__main__":
 			buf = raw_input("USER: ")
 			#print "USER: ",buf
 			resp = (query_handling(buf))
-			resp = resp.encode('ascii')
+			# resp = resp.encode('ascii')
 			#resp = resp.encode('ascii', 'ignore')
 			print "TRIPPO: ",resp
 
