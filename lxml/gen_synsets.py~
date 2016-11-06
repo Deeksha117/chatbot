@@ -29,5 +29,5 @@ print qry_terms
 
 for cat, val_lst in qry_terms.iteritems():
 	for entry in val_lst:
-		print entry ,get_similarity_score(entry)
+		print get_similarity_score(entry)
 

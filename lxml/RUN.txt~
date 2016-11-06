@@ -1,0 +1,7 @@
+Processing HolidayIQ site data to create our data store:
+
+1. scrapper_html.py
+2. parse_state.py
+
+Processing Query:
+

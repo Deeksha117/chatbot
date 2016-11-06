@@ -20,7 +20,7 @@ class Response_Functions:
     	#print ids
 	counter=(randint(0,3))
 	res_list=["Hola!\n Let me guide your Travel,\n\n", "Well,\n\n", "Let me give you some details,\n\n", "Your Travel guide says,\n\n"]
-    	print res_list[counter]+db.states.find({"name":ids.lower()})[0]["details"]+"\n"
+    	print res_list[counter]+db.states.find({"name":ids.lower()})[0]["details"]
 
     #function called when intent is destination
     def get_destination(self,ids):

@@ -3,7 +3,7 @@ import requests
 url = 'https://api.api.ai/api/query?v=20150910'
 
 req = dict()
-req['query'] = ['Hello']
+req['query'] = ['review Rajasthan']
 
 #con = dict()
 #con['name']='weather'
