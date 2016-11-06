@@ -1,8 +1,11 @@
 Processing HolidayIQ site data to create our data store:
 
 1. scrapper_html.py --- scraping data
-2. parse_state.py  --- parsing state data and store in db called traveldata
-3. parse_city.py  --- parse city data and store in db called traveldata, table=destinations
+2. create_DB.py
+
+	a. parse_state.py  --- parsing state data and store in db called traveldata
+	b. parse_city.py  --- parse city data and store in db called traveldata, table=destinations
+	c. insert_popular_places.py --- store popular places like beach, hill in db
 
 Processing Query:
 

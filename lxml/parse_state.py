@@ -11,8 +11,6 @@ db = client.traveldata
 import requests
 from lxml import html
 
-db.destinations.drop()
-
 ## Open the file to read all states
 f = open("../urls_to_parse/0", "r")
 states = f.readlines()
@@ -49,7 +47,7 @@ for x in range(0, 4):
     for item in l:
 	try:
     		st_desc=str(st_desc+str(item))
-		print str(item)
+		#print str(item)
 	except:
 		continue
     state_data['details']=st_desc
@@ -80,15 +78,15 @@ for x in range(0, 4):
 
 #printing from traveldata.destinations table
 count = 0
-for post in db.destinations.find({}):
+for post in db.destinations.find({'type':'state'}):
 	print count
 	count += 1
 	print post["name"]
 	print post["ratings"]
         #print post["details"]
-        print post["places"]
-	print post["video_review"]
-	print post["reviews"]
+        #print post["places"]
+	#print post["video_review"]
+	#print post["reviews"]
     
 
 
