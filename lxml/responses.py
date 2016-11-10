@@ -35,25 +35,28 @@ class Response_Functions:
             #keyword extraction
 
         elif record["type"] == 'city':
-            strn = str(ids)+" is located in the state of "+record[city_statename]
-            strn = strn+ ". Best time to visit is " + " ".join(record[city_bestTime])
+            strn = str(ids)+" is located in the state of "+record["city_statename"]
+            strn = strn+ ". Best time to visit is " + " ".join(record["city_bestTime"])
             #record["famousfor"]
             return res_list[counter]+strn
+        elif record["type"] == "common":
+        	return self.get_destination(ids)
         else:
             return "Please be more specific."
         #return res_list[counter]+"".join(db.destinations.find({"name":ids.lower()})[0]["details"].split('.')[:4])
 
     #function called when intent is destination
     def get_destination(self,ids):
+    	#print ids
         #themes = ['beach', 'hill', 'adventure', 'jungle', 'honeymoon', 'desert', 'waterfront' ]
         try:
             record=db.destinations.find({"name":ids.lower()})[0]
         except:
-            return "No description available for this place."
+            return "No destinations available for this place."
         places = record["places"]
 
         if record["type"] == "common":
-            strn = "Please choose among these popular "+ids+" places : "
+            strn = "You can choose among these popular "+ids+" places : "
 
         #call db for popular places and return
         # else for proper nouns: states and cities, fetch from db
@@ -63,7 +66,7 @@ class Response_Functions:
             strn = "Popular Sightseeing places in "+ids+" are:\n"
         strn = strn + "\n"
         for p in places:
-            strn=strn+str(p)+", "
+            strn=strn+str(p).title()+", "
         return strn
 
     #function called when intent is rating
@@ -95,11 +98,19 @@ class Response_Functions:
             strn = "Please be more specific."
         return strn
 
-    def get_how_to_reach(self,ids):
-        try:
+    def get_how_to_reach(self,ids,transport):
+    	#print "how to reach",ids
+    	try:
             record=db.destinations.find({"name":ids.lower()})[0]
         except:
             return "No review available for this place."
+
+    	if(transport==""):
+    		#give default reply
+    		pass
+    	else:
+    		#give record["mode"][transport]
+    		pass      
         
         return "[empty]"
 
@@ -110,27 +121,18 @@ class Response_Functions:
             return "No review available for this place."
         
         if record["type"]=="city":
-            strn = "Best time to visit "+ids+" is " + " ".join(record[city_bestTime])
+            strn = "Best time to visit "+ids+" is " + " ".join(record["city_bestTime"])
         else:
             strn = "Please specify city name!"
 
         return strn
 
-    def make_plan(self,ids):
+    def make_plan(self,ids,month,duration):
+    	#print "make_plan",ids,month,duration
         try:
             record=db.destinations.find({"name":ids.lower()})[0]
         except:
             return "No plan available for this place."
-
-        try:
-            duration = response["result"]["parameters"]["duration"]
-        except:
-            duration="5"         #default duration of travel
-
-        try:
-            month = response["result"]["parameters"]["month"].lower()
-        except:
-            month = now.month
 
         if record["type"]=="city":
             if duration<"3" :
@@ -145,10 +147,12 @@ class Response_Functions:
                 except:
                     return "Sorry. I am unable to plan your travel."
                 strn = "For local sightseeing you can visit: "
+                #print record
                 places = record["places"][:4]
                 strn = strn + "\n"
                 for p in places:
-                        strn=strn+str(p)+", "
+                        strn=strn+str(p).title()+", "
+                #print record_state
                 record_state["places"][:4]
         elif record["type"]=="state":
             places = record["places"][:3]
@@ -221,10 +225,14 @@ def query_handling(query):
             return "Sorry we have'nt got any response for you"
 
     elif response["result"]["action"]=="get_how_to_reach":
+    	try:
+    		transport = response["result"]["parameters"]["transport"].lower()
+    	except:
+    		transport = ""
         if key1:
-            return obj.get_how_to_reach(key1)
+            return obj.get_how_to_reach(key1,transport)
         elif key2:
-            return obj.get_how_to_reach(key2)
+            return obj.get_how_to_reach(key2,transport)
         else :
             return "Sorry we have'nt got any response for you"
 
@@ -237,10 +245,19 @@ def query_handling(query):
             return "Sorry we have'nt got any response for you"
 
     elif response["result"]["action"]=="make_plan":
+    	try:
+    		duration = response["result"]["parameters"]["duration"]
+    	except:
+    		duration = "5"
+    	try:
+    		month = response["result"]["parameters"]["month"]
+    	except:
+    		month = now.month
+
         if key1:
-            return obj.make_plan(key1)
+            return obj.make_plan(key1,month,duration)
         elif key2:
-            return obj.make_plan(key2)
+            return obj.make_plan(key2,month,duration)
         else :
             return "Sorry we have'nt got any response for you"
 
