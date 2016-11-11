@@ -2,6 +2,7 @@
 from api_ai_request import api_request as api_request
 import pymongo
 import datetime
+import spell
 from random import randint
 import socket
 client = pymongo.MongoClient()
@@ -184,8 +185,9 @@ def query_handling(query):
     obj = Response_Functions()                      #object for receiving all responses from Response_Functions class
     
     try:
-            key1=response["result"]["parameters"]["place_name"].lower()
-            key2=response["result"]["parameters"]["place_namecontext"].lower()
+            key1=spell.correction(response["result"]["parameters"]["place_name"].lower())
+
+            key2=spell.correction(response["result"]["parameters"]["place_namecontext"].lower())
     except:
             return response["result"]["fulfillment"]["speech"]
 
@@ -228,7 +230,7 @@ def query_handling(query):
 
     elif response["result"]["action"]=="get_how_to_reach":
     	try:
-    		transport = response["result"]["parameters"]["transport"].lower()
+    		transport = spell.correction(response["result"]["parameters"]["transport"].lower())
     	except:
     		transport = ""
         if key1:
@@ -252,7 +254,7 @@ def query_handling(query):
     	except:
     		duration = "5"
     	try:
-    		month = response["result"]["parameters"]["month"]
+    		month = spell.correction(response["result"]["parameters"]["month"])
     	except:
     		month = now.month
 
