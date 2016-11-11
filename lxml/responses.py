@@ -54,7 +54,7 @@ class Response_Functions:
         try:
             record=db.destinations.find({"name":ids.lower()})[0]
         except:
-            return "No destinations available for this place."
+            return "We are so Sorry! No destinations available for this place."
         places = record["places"]
 
         if record["type"] == "common":
@@ -65,7 +65,7 @@ class Response_Functions:
         elif record["type"] == "state":
             strn = ids + " is big state with a variety of cities popular for different activities, these are:\n"
         else: 
-            strn = "Dear Traveller, Come and explre the Popular Sightseeing places in "+ids+" , these are:\n"
+            strn = "Dear Traveller, Come and explore the Popular Sightseeing places in "+ids+" , these are:\n"
         strn = strn + "\n"
         for p in places:
             strn=strn+str(p).title()+", "
@@ -76,7 +76,7 @@ class Response_Functions:
         try:
             record=db.destinations.find({"name":ids.lower()})[0]
         except:
-            return "Rating not available for this place."
+            return "We are so Sorry! Rating is not available for this place."
         counter=(randint(0,3))
         res_list=["According to Traveller feedback,\n", "Suggested by Travellers,\n", "Several Travellers have given,\n", "Travellers say,\n"]
         try:
@@ -91,7 +91,7 @@ class Response_Functions:
         try:
             record=db.destinations.find({"name":ids.lower()})[0]
         except:
-            return "No review available for this place."
+            return "We are so Sorry! No review available for this place."
         try:
             strn = "Dear Traveller "+ ids.title()+" Reviews are as follows,\n"
             strn = strn + ">> " +str(record["reviews"][0])
@@ -135,7 +135,7 @@ class Response_Functions:
         try:
             record=db.destinations.find({"name":ids.lower()})[0]
         except:
-            return "No plan available for this place."
+            return "We are so Sorry! No plan available for this place."
 
         if record["type"]=="city":
             if duration<"3" :
