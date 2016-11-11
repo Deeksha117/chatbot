@@ -38,13 +38,13 @@ class Response_Functions:
         elif record["type"] == 'city':
             strn = record["details"]
             #strn = strn+str(ids)+" is located in the state of "+record["city_statename"]
-            strn = strn+ ". Best time to visit is " + " ".join(record["city_bestTime"])
+            strn = strn+ ". Best time to visit is:  " + " ".join(record["city_bestTime"])
             #record["famousfor"]
             return res_list[counter]+strn
         elif record["type"] == "common":
         	return self.get_destination(ids)
         else:
-            return "Please be more specific."
+            return "Sorry we could not get you. Can you be more specific."
         #return res_list[counter]+"".join(db.destinations.find({"name":ids.lower()})[0]["details"].split('.')[:4])
 
     #function called when intent is destination
@@ -58,14 +58,14 @@ class Response_Functions:
         places = record["places"]
 
         if record["type"] == "common":
-            strn = "You can choose among these popular "+ids+" places : "
+            strn = "Hey!\n Please make a choice among these popular "+ids+" places : "
 
         #call db for popular places and return
         # else for proper nouns: states and cities, fetch from db
         elif record["type"] == "state":
-            strn = ids + " has the following popular cities to visit:\n"
+            strn = ids + " is big state with a variety of cities popular for different activities, these are:\n"
         else: 
-            strn = "Popular Sightseeing places in "+ids+" are:\n"
+            strn = "Dear Traveller, Come and explre the Popular Sightseeing places in "+ids+" , these are:\n"
         strn = strn + "\n"
         for p in places:
             strn=strn+str(p).title()+", "
@@ -82,7 +82,7 @@ class Response_Functions:
         try:
             strn= res_list[counter]+record["ratings"] + ", for " +ids.title()+"\nYou may also like to see this video review from a traveller,\n" + record["video_review"]
         except:
-            strn = "Please be more specific."
+            strn = "Sorry we could not get you. Can you be more specific."
         return strn
 
 
@@ -97,7 +97,7 @@ class Response_Functions:
             strn = strn + ">> " +str(record["reviews"][0])
             strn = strn + "\n\n>> " +str(record["reviews"][1])
         except:
-            strn = "Please be more specific."
+            strn = "Sorry we could not get you. Can you be more specific."
         return strn
 
     def get_how_to_reach(self,ids,transport):
@@ -230,7 +230,7 @@ def query_handling(query):
 
     elif response["result"]["action"]=="get_how_to_reach":
     	try:
-    		transport = spell.correction(response["result"]["parameters"]["transport"].lower())
+    		transport = response["result"]["parameters"]["transport"].lower()
     	except:
     		transport = ""
         if key1:
