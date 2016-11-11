@@ -1,4 +1,5 @@
-#Beaches
+#Beach
+panjim
 kochi-cochin
 port-blair
 havelock-island
@@ -42,7 +43,7 @@ kovalam
 pahalgam
 sonamarg
 #Desert
-jaisalmer
+jaipur
 jodhpur
 pushkar
 bikaner

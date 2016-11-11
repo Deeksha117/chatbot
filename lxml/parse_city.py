@@ -25,7 +25,7 @@ city_data={}
 city_DS2=[]
 city_data2={}
 
-for x in range (0,10):
+for x in range (0,9):
     city_url = city[x]
     lst = city_url.split('/')
     city_name=lst[4]
@@ -88,10 +88,10 @@ for post in db.destinations.find({"type":"city"}):
 	print post["ratings"]
 	#print post["Famous_for"]
 	print post["travel_guide"]
-	print post["city_rank"]
-	print post["city_statename"]
-	print post["city_bestTime"]
-	print post["city_reviews"]
+	#print post["city_rank"]
+	#print post["city_statename"]
+	#print post["city_bestTime"]
+	#print post["city_reviews"]
 
 
 

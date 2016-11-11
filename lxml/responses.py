@@ -35,7 +35,8 @@ class Response_Functions:
             #keyword extraction
 
         elif record["type"] == 'city':
-            strn = str(ids)+" is located in the state of "+record["city_statename"]
+            strn = record["details"]
+            #strn = strn+str(ids)+" is located in the state of "+record["city_statename"]
             strn = strn+ ". Best time to visit is " + " ".join(record["city_bestTime"])
             #record["famousfor"]
             return res_list[counter]+strn
@@ -47,7 +48,7 @@ class Response_Functions:
 
     #function called when intent is destination
     def get_destination(self,ids):
-    	#print ids
+    	print ids
         #themes = ['beach', 'hill', 'adventure', 'jungle', 'honeymoon', 'desert', 'waterfront' ]
         try:
             record=db.destinations.find({"name":ids.lower()})[0]
@@ -103,22 +104,23 @@ class Response_Functions:
     	try:
             record=db.destinations.find({"name":ids.lower()})[0]
         except:
-            return "No review available for this place."
+            return "Sorry we could not get you. Can you be more specific."
 
     	if(transport==""):
     		#give default reply
-    		pass
+            strn = "You can travel via Bus, Train, Flight or Cab. How would you prefer to go?"
+    		
     	else:
+            strn = record["mode"][transport]
     		#give record["mode"][transport]
-    		pass      
         
-        return "[empty]"
+        return strn
 
     def best_time(self,ids):
         try:
             record=db.destinations.find({"name":ids.lower()})[0]
         except:
-            return "No review available for this place."
+            return "Sorry we could not get you. Can you be more specific."
         
         if record["type"]=="city":
             strn = "Best time to visit "+ids+" is " + " ".join(record["city_bestTime"])

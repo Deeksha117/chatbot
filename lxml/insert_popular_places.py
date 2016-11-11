@@ -8,10 +8,8 @@ client = pymongo.MongoClient()
 
 #creating a new DB called, traveldata
 db = client.traveldata
-import requests
-from lxml import html
 
-## Open the file to read all states
+## Open the file to read all places
 f = open("../resources/Popularplaces.txt", "r")
 lines = f.readlines()
 f.close()
@@ -43,6 +41,31 @@ for post in db.destinations.find({'type':'common'}):
     print post["type"]
     print post["places"]
 
+
+## Open the file to read all places
+f = open("../resources/Popularplaces2.txt", "r")
+lines = f.readlines()
+f.close()
+
+city_data={}
+flag=0
+temp=[]
+for oneline in lines:
+    if oneline[0] == "#":
+        if len(temp) > 0:
+            city_data['places']=temp 
+            db.destinations.remove({"name":city_name.lower()})
+            db.destinations.insert(city_data.copy())
+        city_name = oneline[1:-1]
+        city_data=db.destinations.find({"name":city_name.lower()})[0]
+	temp=[]
+    else:
+        temp.append(oneline[:-1])
+
+if len(temp) > 0:
+    city_data['places']=temp 
+    db.destinations.remove({"name":city_name.lower()})
+    db.destinations.insert(city_data.copy())
 
 
 
