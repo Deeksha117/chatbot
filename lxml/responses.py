@@ -185,45 +185,45 @@ def query_handling(query):
     obj = Response_Functions()                      #object for receiving all responses from Response_Functions class
     
     try:
-            key1=spell.correction(response["result"]["parameters"]["place_name"].lower())
+            key1=response["result"]["parameters"]["place_name"].lower()
 
-            key2=spell.correction(response["result"]["parameters"]["place_namecontext"].lower())
+            key2=response["result"]["parameters"]["place_namecontext"].lower()
     except:
             return response["result"]["fulfillment"]["speech"]
 
     #Matching action name with function call from Response_Functions call
     if response["result"]["action"]=="get_description":
         if key1:
-            return obj.get_description(key1)
+            return obj.get_description(spell.correction(key1))
         elif key2:
-            return obj.get_description(key2)
+            return obj.get_description(spell.correction(key2))
         else :
             #print "Sorry we have'nt got any response for you"
             return "Sorry we have'nt got any response for you"
 
     elif response["result"]["action"]=="get_destination":
         if key1:
-            return obj.get_destination(key1)
+            return obj.get_destination(spell.correction(key1))
         elif key2:
-            return obj.get_destination(key2)
+            return obj.get_destination(spell.correction(key2))
         else :
             #print "Sorry we have'nt got any response for you"
             return "Sorry we have'nt got any response for you"
 
     elif response["result"]["action"]=="get_rating":
         if key1:
-            return obj.get_rating(key1)
+            return obj.get_rating(spell.correction(key1))
         elif key2:
-            return obj.get_rating(key2)
+            return obj.get_rating(spell.correction(key2))
         else :
             #print "Sorry we have'nt got any response for you"
             return "Sorry we have'nt got any response for you"
 
     elif response["result"]["action"]=="get_review":
         if key1:
-            return obj.get_review(key1)
+            return obj.get_review(spell.correction(key1))
         elif key2:
-            return obj.get_review(key2)
+            return obj.get_review(spell.correction(key2))
         else :
             #print "Sorry we have'nt got any response for you"
             return "Sorry we have'nt got any response for you"
@@ -234,17 +234,17 @@ def query_handling(query):
     	except:
     		transport = ""
         if key1:
-            return obj.get_how_to_reach(key1,transport)
+            return obj.get_how_to_reach(spell.correction(key1),transport)
         elif key2:
-            return obj.get_how_to_reach(key2,transport)
+            return obj.get_how_to_reach(spell.correction(key2),transport)
         else :
             return "Sorry we have'nt got any response for you"
 
     elif response["result"]["action"]=="best_time":
         if key1:
-            return obj.best_time(key1)
+            return obj.best_time(spell.correction(key1))
         elif key2:
-            return obj.best_time(key2)
+            return obj.best_time(spell.correction(key2))
         else :
             return "Sorry we have'nt got any response for you"
 
@@ -259,9 +259,9 @@ def query_handling(query):
     		month = now.month
 
         if key1:
-            return obj.make_plan(key1,month,duration)
+            return obj.make_plan(spell.correction(key1),month,duration)
         elif key2:
-            return obj.make_plan(key2,month,duration)
+            return obj.make_plan(spell.correction(key2),month,duration)
         else :
             return "Sorry we have'nt got any response for you"
 
